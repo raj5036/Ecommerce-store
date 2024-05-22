@@ -8,3 +8,16 @@
     font-weight: 600;
     color: var(--black-1);
 }
+
+.listSubHeader {
+	display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12rem;
+    margin-left: 109px;
+}
+
+.subHeaderItem {
+	font-size: 14px;
+    font-weight: 500;
+}
