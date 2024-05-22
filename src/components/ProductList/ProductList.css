@@ -2,3 +2,9 @@
 	margin-top: 72px;
 	margin-left: 252px;
 }
+
+.listHeader {
+	font-size: 16px;
+    font-weight: 600;
+    color: var(--black-1);
+}
