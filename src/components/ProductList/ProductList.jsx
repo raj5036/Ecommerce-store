@@ -1,7 +1,6 @@
 import './ProductList.css'
 
-import { useState, useEffect } from 'react'
-import { closestCorners, DndContext } from '@dnd-kit/core'
+import { useState } from 'react'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import Product from '../Product/Product'
 
@@ -58,13 +57,13 @@ const ProductList = () => {
     const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 
-	useEffect(() => {
-		// getProducts('Hat', 1)
-		// 	.then(result => {
-		// 		console.log(result)
-		// 	})
-		// 	.catch()
-	}, [])
+	// useEffect(() => {
+	// 	getProducts('Hat', 1)
+	// 		.then(result => {
+	// 			console.log(result)
+	// 		})
+	// 		.catch()
+	// }, [])
 
     const onAddDiscountClick = (id) => () => {
         setDiscountOptionsDisplay({
@@ -83,36 +82,28 @@ const ProductList = () => {
 	}
 
 	return (
-		<div className='productListContainer'>
-			<h1 className='listHeader'>Add products</h1>
-			<div className='listSubHeader'>
-				<div className='subHeaderItem'>Product</div>
-				<div className='subHeaderItem'>Discount</div>
-			</div>
-            <DndContext collisionDetection={closestCorners}>
-                <div className='listContainer'>
-                    <SortableContext 
-                        items={dummyProductList}
-                        strategy={verticalListSortingStrategy}
-                    >
-                        {dummyProductList.map((product, index) => {
-                            return (
-                                <Product 
-                                    key={index}
-                                    id={product.id}
-                                    title={product.title}
-                                    variants={product.variants}
-                                    image={product.image}
-                                    discountOptionsDisplay={discountOptionsDisplay}
-                                    onAddDiscountClick={onAddDiscountClick}
-                                    onDiscountInputChange={onDiscountInputChange}
-                                />
-                            )
-                        })}
-                    </SortableContext>
-                </div>
-            </DndContext>
-		</div>
+        <div className='listContainer column' id='productList'> 
+            <SortableContext 
+                items={dummyProductList}
+                strategy={verticalListSortingStrategy}
+            >
+                {dummyProductList.map((product, index) => {
+                    return (
+                        <Product 
+                            key={product.id}
+                            index={index}
+                            id={product.id}
+                            title={product.title}
+                            variants={product.variants}
+                            image={product.image}
+                            discountOptionsDisplay={discountOptionsDisplay}
+                            onAddDiscountClick={onAddDiscountClick}
+                            onDiscountInputChange={onDiscountInputChange}
+                        />
+                    )
+                })}
+            </SortableContext>
+        </div>
 	)
 }
 
