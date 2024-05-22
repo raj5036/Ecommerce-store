@@ -13,7 +13,7 @@
 	display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 12rem;
+    gap: 16rem;
 	margin-top: 25px;
     margin-left: 109px;
 }
@@ -24,13 +24,15 @@
 }
 
 .listContainer {
-
+    margin-top: 20px;
 }
 
 .product {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: start;
     align-items: center;
+    gap: 7rem;
+    margin-bottom: 30px;
 }
 
 .productPicker {
@@ -43,6 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-left: 45px;
 }
 
 .pickerText {
@@ -52,6 +55,16 @@
 
 .pickerIcon {
     height: 16px;
+}
+
+.addDiscountButton {
+    cursor: pointer;
+    color: #fff;
+    background-color: var(--green-1);
+    height: 35px;
+    width: 102px;
+    border: none;
+    border-radius: 5px;
 }
 
 .discountInput {

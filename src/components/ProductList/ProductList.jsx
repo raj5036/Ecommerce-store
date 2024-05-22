@@ -1,7 +1,7 @@
 // import { getProducts } from '../../utils/ApiClient'
 import './ProductList.css'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PickerIcon from '../../assets/svgs/pickerIcon.svg'
 
 const dummyProductList = [
@@ -54,6 +54,7 @@ const dummyProductList = [
 ]
 
 const ProductList = () => {
+    const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 
 	useEffect(() => {
@@ -63,6 +64,14 @@ const ProductList = () => {
 		// 	})
 		// 	.catch()
 	}, [])
+
+    const onAddDiscountClick = (id) => () => {
+        console.log('OK')
+        setDiscountOptionsDisplay({
+            ...discountOptionsDisplay,
+            [id]: true
+        })
+    }
 
 	const onDiscountInputChange = (id, e) => {
 		console.log(id)
@@ -87,13 +96,22 @@ const ProductList = () => {
 							<span className='pickerText'>{product.title}</span>
 							<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
 						</div>
-                        <input
-                            className='discountInput' 
-                            type='number' 
-                            onChange={e => onDiscountInputChange(product.id, e)}
-                            placeholder='00'
-                        />
-						<div className='discountTypeDropdown'>Flat</div>
+                        {!discountOptionsDisplay[product.id] 
+                            ? (<button 
+                                    className='addDiscountButton'
+                                    onClick={onAddDiscountClick(product.id)}
+                                >
+                                        Add Discount
+                                </button>) 
+                            : (<React.Fragment>
+                                <input
+                                    className='discountInput' 
+                                    type='number' 
+                                    onChange={e => onDiscountInputChange(product.id, e)}
+                                    placeholder='00'
+                                />
+                                <div className='discountTypeDropdown'>Flat</div>
+                            </React.Fragment>)}
 					</div>
 				))}
 			</div>
