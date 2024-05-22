@@ -87,9 +87,12 @@ const ProductList = () => {
 							<span className='pickerText'>{product.title}</span>
 							<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
 						</div>
-						<div className='discountInput'>
-							<input type='text' onChange={e => onDiscountInputChange(product.id, e)}/>
-						</div>
+                        <input
+                            className='discountInput' 
+                            type='number' 
+                            onChange={e => onDiscountInputChange(product.id, e)}
+                            placeholder='00'
+                        />
 						<div className='discountTypeDropdown'>Flat</div>
 					</div>
 				))}

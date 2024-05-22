@@ -55,7 +55,15 @@
 }
 
 .discountInput {
-
+    height: 26px;
+    width: 69px;
+    border: 1px solid #0000001A;
+    box-shadow: 0px 2px 4px 0px #0000001A;
+    font-size: 14px;
+    font-weight: 400;
+}
+.discountInput:hover {
+    cursor: pointer;
 }
 
 .discountTypeDropdown {
