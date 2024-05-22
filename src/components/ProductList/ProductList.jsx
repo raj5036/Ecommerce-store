@@ -1,8 +1,9 @@
-// import { getProducts } from '../../utils/ApiClient'
 import './ProductList.css'
 
-import React, { useState, useEffect } from 'react'
-import PickerIcon from '../../assets/svgs/pickerIcon.svg'
+import { useState, useEffect } from 'react'
+import { closestCorners, DndContext } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import Product from '../Product/Product'
 
 const dummyProductList = [
     {
@@ -66,7 +67,6 @@ const ProductList = () => {
 	}, [])
 
     const onAddDiscountClick = (id) => () => {
-        console.log('OK')
         setDiscountOptionsDisplay({
             ...discountOptionsDisplay,
             [id]: true
@@ -89,32 +89,29 @@ const ProductList = () => {
 				<div className='subHeaderItem'>Product</div>
 				<div className='subHeaderItem'>Discount</div>
 			</div>
-			<div className='listContainer'>
-				{dummyProductList.map((product, index) => (
-					<div key={index} className='product'>
-						<div className='productPicker'>
-							<span className='pickerText'>{product.title}</span>
-							<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
-						</div>
-                        {!discountOptionsDisplay[product.id] 
-                            ? (<button 
-                                    className='addDiscountButton'
-                                    onClick={onAddDiscountClick(product.id)}
-                                >
-                                        Add Discount
-                                </button>) 
-                            : (<React.Fragment>
-                                <input
-                                    className='discountInput' 
-                                    type='number' 
-                                    onChange={e => onDiscountInputChange(product.id, e)}
-                                    placeholder='00'
+            <DndContext collisionDetection={closestCorners}>
+                <div className='listContainer'>
+                    <SortableContext 
+                        items={dummyProductList}
+                        strategy={verticalListSortingStrategy}
+                    >
+                        {dummyProductList.map((product, index) => {
+                            return (
+                                <Product 
+                                    key={index}
+                                    id={product.id}
+                                    title={product.title}
+                                    variants={product.variants}
+                                    image={product.image}
+                                    discountOptionsDisplay={discountOptionsDisplay}
+                                    onAddDiscountClick={onAddDiscountClick}
+                                    onDiscountInputChange={onDiscountInputChange}
                                 />
-                                <div className='discountTypeDropdown'>Flat</div>
-                            </React.Fragment>)}
-					</div>
-				))}
-			</div>
+                            )
+                        })}
+                    </SortableContext>
+                </div>
+            </DndContext>
 		</div>
 	)
 }
