@@ -14,10 +14,50 @@
     justify-content: flex-start;
     align-items: center;
     gap: 12rem;
+	margin-top: 25px;
     margin-left: 109px;
 }
 
 .subHeaderItem {
 	font-size: 14px;
     font-weight: 500;
+}
+
+.listContainer {
+
+}
+
+.product {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.productPicker {
+    cursor: pointer;
+    height: 31px;
+    width: 215px;
+    border: 1px solid var(--black-2);
+    box-shadow: 0px 2px 4px 0px #0000001A;
+    padding: 2px 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pickerText {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.pickerIcon {
+    height: 16px;
+}
+
+.discountInput {
+
+}
+
+.discountTypeDropdown {
+
 }
