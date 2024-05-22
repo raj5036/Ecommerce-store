@@ -1,0 +1,9 @@
+:root {
+  --grey-1: #D1D1D1;
+  --grey-2: #7E8185;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

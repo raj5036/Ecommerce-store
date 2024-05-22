@@ -1,3 +1,23 @@
 .headerContainer {
-	color: #000;
+	display: flex;
+    justify-content: flex-start;
+    align-items: center;
+	gap: 10px;
+	border-bottom: solid 1px var(--grey-1);
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.monkLogo {
+	height: 31px;
+	width: 31px;
+	cursor: pointer;
+	margin-left: 30px;
+}
+
+.headerText {
+	color: var(--grey-2);
+	font-size: 16px;
+    font-weight: 600;
 }
