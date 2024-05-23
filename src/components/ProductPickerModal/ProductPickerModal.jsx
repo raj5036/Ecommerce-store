@@ -32,8 +32,27 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 	}, [searchInput])
 
 	const onProductSelectChange = (productId, checked) => {
-		console.log('productId', productId)
-		console.log(checked)
+		let updatedFilteredResult = filteredResults.slice() //Make a copy of filteredResults
+		
+		// Update the checkboxes
+		filteredResults.forEach((product, index) => {
+			if (product.id == productId) {
+				updatedFilteredResult[index] = {
+					...updatedFilteredResult[index],
+					checked
+				}
+
+				updatedFilteredResult[index].variants = updatedFilteredResult[index].variants.map(variant => ({
+					...variant,
+					checked
+				}))
+			}
+		})
+
+		setFilteredResults(updatedFilteredResult)
+
+		// update the 'selectedProducts' state
+		setSelectedProducts(updatedFilteredResult.filter(product => product.checked))
 	}
 
 	const onProductVariantSelectChange = (productId, variantId, checked) => {
@@ -66,7 +85,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 											type='checkbox'
 											className='checkbox'
 											name='checkbox'
-											checked={product.checked}
+											checked={product.checked || false}
 											onChange={e => onProductSelectChange(product.id, e.target.checked)}
 										/>
 										<img 
@@ -85,7 +104,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 													<input
 														type='checkbox'
 														className='checkbox'
-														checked={variant.checked}
+														checked={variant.checked || false}
 														onChange={e => onProductVariantSelectChange(
 															product.id, 
 															variant.id, 
@@ -110,7 +129,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 							<button className='button cancelButton'>Cancel</button>
 							<button 
 								className='button addButton'
-								disabled={true}
+								disabled={selectedProducts.length ? false : true}
 							>Add</button>
 						</div>
 					</div>
