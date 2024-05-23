@@ -1,12 +1,14 @@
-import { useSortable } from '@dnd-kit/sortable'
 import './VariantItem.css'
+
+import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import DragIcon from '../../../assets/svgs/dragIcon.svg'
 
 const VariantItem = ({
 	id,
 	// productId,
 	title,
-	price
+	// price
 }) => {
 	const { 
 		attributes, 
@@ -14,7 +16,6 @@ const VariantItem = ({
 		setNodeRef, 
 		transform, 
 		transition,
-		index
 	} =
     useSortable({ id })
 
@@ -30,9 +31,8 @@ const VariantItem = ({
 		{...listeners}
 		className='variantItem'
 	>
-		<div>{index}</div>
-		<div>{title}</div>
-		<div>{price}</div>
+		<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
+		<div className='variantTitle'>{title}</div>
 	</div>)
 }
 
