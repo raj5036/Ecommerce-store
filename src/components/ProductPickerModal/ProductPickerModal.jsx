@@ -5,7 +5,7 @@ import { IoMdClose } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-const ProductPickerModal = ({ onCloseButtonClick }) => {
+const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 	const allProducts = useSelector(state => state.allProducts.products)
 	const [searchInput, setSearchInput] = useState('')
 	const [filteredResults, setFilteredResults] = useState([])
@@ -160,6 +160,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 							<button 
 								className='button addButton'
 								disabled={selectedProducts.length ? false : true}
+								onClick={onAddButtonClick(selectedProducts)}
 							>Add</button>
 						</div>
 					</div>
