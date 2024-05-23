@@ -3,11 +3,20 @@ import './ProductPickerModal.css'
 
 import { IoMdClose } from 'react-icons/io'
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const ProductPickerModal = ({ onCloseButtonClick }) => {
-	const [searchInput, setSearchInput] = useState()
-
 	const allProducts = useSelector(state => state.allProducts.products)
+	const [searchInput, setSearchInput] = useState('')
+	const [filteredResults, setFilteredResults] = useState(allProducts)
+
+	useEffect(() => {
+		if (!searchInput.length) {
+			setFilteredResults(allProducts)
+			return;
+		}
+		setFilteredResults(filteredResults.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase())))
+	}, [searchInput])
 
 	return (
 		<div className='modal'>
@@ -24,8 +33,8 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 					/>
 					
 					<div className='productsListContainer'>
-						{/* {JSON.stringify(allProducts)} */}
-						{allProducts.map((product, index) => {
+						{!filteredResults.length && <div className='noResults'>No results found</div>}
+						{filteredResults.map((product, index) => {
 							return (
 								<div key={'product-list' + index} className='productContainer'>
 									<div className='mainProduct'>
