@@ -24,8 +24,6 @@ const ProductsListColumn = ({products}) => {
     }
 
 	const onDiscountInputChange = (id, e) => {
-		console.log(id)
-		console.log(e.target.value)
 		setDiscounts({
 			...discounts,
 			[id]: e.target.value
@@ -40,6 +38,7 @@ const ProductsListColumn = ({products}) => {
 						id={product.id} 
 						title={product.title}
 						discountOptionsDisplay={discountOptionsDisplay}
+						discounts={discounts}
 						onDiscountInputChange={onDiscountInputChange}
 						onAddDiscountClick={onAddDiscountClick}
 					/>

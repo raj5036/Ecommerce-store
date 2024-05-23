@@ -1,11 +1,10 @@
 import './App.css'
 
 import React, { useState } from 'react'
-import { closestCorners, DndContext } from '@dnd-kit/core'
+import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import Header from './components/Header/Header'
-import ProductList from './components/ProductList/ProductList'
 import ProductsListColumn from './components/ProductsListColumn/ProductsListColumn'
-import { arrayMove } from '@dnd-kit/sortable'
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 
 function App() {
   const [products, setProducts] = useState([
@@ -72,6 +71,31 @@ function App() {
     });
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        delay: 100,
+        tolerance: 0
+      }
+    }),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        // delay: 100,
+        distance: 8,
+        tolerance: 0
+      }
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 6
+      }
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  )
+
   return (
     <React.Fragment>
       <Header />
@@ -81,12 +105,9 @@ function App() {
           <div className='subHeaderItem'>Product</div>
           <div className='subHeaderItem'>Discount</div>
         </div>
-        <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+        <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd} sensors={sensors}>
           <ProductsListColumn products={products}/>
         </DndContext>
-        {/* <DndContext collisionDetection={closestCorners}>
-          <ProductList id="productList"/>
-        </DndContext> */}
       </div>
     </React.Fragment>
   )

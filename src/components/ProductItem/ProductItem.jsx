@@ -10,6 +10,7 @@ const ProductItem = ({
 	id, 
 	title,
 	discountOptionsDisplay,
+	discounts,
 	onDiscountInputChange,
 	onAddDiscountClick,
 }) => {
@@ -56,6 +57,7 @@ const ProductItem = ({
 					type='number' 
 					onChange={e => onDiscountInputChange(id, e)}
 					placeholder='00'
+					value={discounts[id]}
 				/>
 				<div className='discountTypeDropdown'>Flat</div>
 			</React.Fragment>)}
