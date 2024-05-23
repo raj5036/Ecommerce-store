@@ -5,6 +5,8 @@
     gap: 7rem;
     margin-bottom: 30px;
 	touch-action: none;
+    position: relative;
+    height: 55px;
 }
 
 .dragPickerContainer {
@@ -47,6 +49,7 @@
     width: 102px;
     border: none;
     border-radius: 5px;
+    margin-left: 18%;
 }
 
 .discountInput {
@@ -71,4 +74,22 @@
 
 option {
     font-size: 14px;
+}
+
+.variantOptions {
+    position: absolute;
+    right: 21rem;
+    bottom: -13px;
+    color: var(--blue-1);
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.arrowIcon {
+    height: 10px;
+    width: 10px;
 }
