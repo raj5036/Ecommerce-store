@@ -1,11 +1,12 @@
 /* The Modal (background) */
 .modal {
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+	top: 10%;
 	left: 0;
+	z-index: 1; /* Sit on top */
 	width: 100%; /* Full width */
 	height: 100%; /* Full height */
-	/* overflow: auto; Enable scroll if needed */
+	/* overflow: auto;  */
 	cursor: default;
 }
 
@@ -15,30 +16,31 @@
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 545px; 
-	height: 383px;
+	height: 422px;
+	width: 646px; 
+	border-radius: 5px;
+	overflow: scroll;
 }
 
 .modalHeader {
 	text-align: left;
 	font-size: 24px;
-	font-weight: bold;
+	margin-top: 4px;
+    margin-bottom: 18px;
 }
 
-.headerDescription {
-	text-align: left;
-	margin: 8px 0 14px 0;
-}
-
-.modalSubHeader {
-	margin-bottom: 10px; 
-	text-align: left;
-	font-weight: bold;
-    font-size: 19px;
-}
-
-.actionItems {
-
+.searchInput {
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	background-color: white;
+	background-image: url('../../assets/svgs/searchIcon.svg');
+	background-position: 10px 10px; 
+	background-size: 21px 21px;
+	background-repeat: no-repeat;
+	padding: 12px 20px 12px 40px;
 }
 
 /* The Close Button */
@@ -48,10 +50,4 @@
 	font-size: 28px;
 	font-weight: bold;
 	cursor: pointer;
-}
-
-.actionItems {
-	display: flex;
-	justify-content: flex-start;
-	flex-wrap: wrap;
 }
