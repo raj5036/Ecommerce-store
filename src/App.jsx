@@ -5,6 +5,7 @@ import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor,
 import Header from './components/Header/Header'
 import ProductsListColumn from './components/ProductsListColumn/ProductsListColumn'
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import AddProductButton from './components/AddProductButton/AddProductButton'
 
 function App() {
   const [products, setProducts] = useState([
@@ -93,6 +94,10 @@ function App() {
     })
   )
 
+  const onAddProduct = () => {
+    console.log('onAddProduct')
+  }
+
   return (
     <React.Fragment>
       <Header />
@@ -103,9 +108,10 @@ function App() {
           <div className='subHeaderItem'>Discount</div>
         </div>
         <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd} sensors={sensors}>
-          <ProductsListColumn products={products}/>
+          <ProductsListColumn products={products} />
         </DndContext>
       </div>
+      <AddProductButton onAddProduct={onAddProduct}/>
     </React.Fragment>
   )
 }

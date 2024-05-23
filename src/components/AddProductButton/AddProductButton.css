@@ -1,0 +1,13 @@
+.addProductButton {
+	height: 48px;
+    width: 193px;
+    border: 2px solid var(--green-1);
+    position: relative;
+	left: 50%;
+    transform: translate(-39%, 0px); 
+    color: var(--green-1);
+	background-color: var(--white-1);
+    font-size: 14.5px;
+    font-weight: 600;
+	cursor: pointer;
+}
