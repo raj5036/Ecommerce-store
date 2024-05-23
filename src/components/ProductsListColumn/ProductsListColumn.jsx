@@ -7,7 +7,7 @@ import ProductPickerModal from '../ProductPickerModal/ProductPickerModal'
 import { useSelector } from 'react-redux'
 
 const ProductsListColumn = () => {
-	const [showProductPickerModal, setShowProductPickerModal] = useState(true)
+	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
 	const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 

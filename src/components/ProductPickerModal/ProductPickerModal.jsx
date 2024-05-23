@@ -8,7 +8,20 @@ import { useEffect } from 'react'
 const ProductPickerModal = ({ onCloseButtonClick }) => {
 	const allProducts = useSelector(state => state.allProducts.products)
 	const [searchInput, setSearchInput] = useState('')
-	const [filteredResults, setFilteredResults] = useState(allProducts)
+	const [filteredResults, setFilteredResults] = useState([])
+	const [selectedProducts, setSelectedProducts] = useState([])
+
+	useEffect(() => {
+		const temp = allProducts.map(product => ({
+			...product,
+			checked: false,
+			variants: product.variants.map(variant => ({
+				...variant,
+				checked: true
+			}))
+		}))
+		setFilteredResults(temp)
+	}, [])
 
 	useEffect(() => {
 		if (!searchInput.length) {
@@ -17,6 +30,17 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 		}
 		setFilteredResults(filteredResults.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase())))
 	}, [searchInput])
+
+	const onProductSelectChange = (productId, checked) => {
+		console.log('productId', productId)
+		console.log(checked)
+	}
+
+	const onProductVariantSelectChange = (productId, variantId, checked) => {
+		console.log('productId', productId)
+		console.log('variantId', variantId)
+		console.log(checked)
+	}
 
 	return (
 		<div className='modal'>
@@ -42,7 +66,8 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 											type='checkbox'
 											className='checkbox'
 											name='checkbox'
-											onChange={e => console.log(e.target.checked)}
+											checked={product.checked}
+											onChange={e => onProductSelectChange(product.id, e.target.checked)}
 										/>
 										<img 
 											src={product.image.src} 
@@ -60,7 +85,12 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 													<input
 														type='checkbox'
 														className='checkbox'
-														onChange={e => console.log(e.target.checked)}
+														checked={variant.checked}
+														onChange={e => onProductVariantSelectChange(
+															product.id, 
+															variant.id, 
+															e.target.checked
+														)}
 													/>
 													<div>
 														{variant.title}
@@ -75,7 +105,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 					</div>
 
 					<div className='modalFooter'>
-						<div>{'0 products selected'}</div>
+						<div>{selectedProducts.length + ' products selected'}</div>
 						<div className='buttons'>
 							<button className='button cancelButton'>Cancel</button>
 							<button 
