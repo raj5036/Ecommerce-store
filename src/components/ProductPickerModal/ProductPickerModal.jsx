@@ -35,7 +35,7 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 		let updatedFilteredResult = filteredResults.slice() //Make a copy of filteredResults
 		
 		// Update the checkboxes
-		filteredResults.forEach((product, index) => {
+		updatedFilteredResult.forEach((product, index) => {
 			if (product.id == productId) {
 				updatedFilteredResult[index] = {
 					...updatedFilteredResult[index],
@@ -56,9 +56,36 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 	}
 
 	const onProductVariantSelectChange = (productId, variantId, checked) => {
-		console.log('productId', productId)
-		console.log('variantId', variantId)
-		console.log(checked)
+
+		let updatedFilteredResult = filteredResults.slice()
+
+		// Update the checkboxes
+		updatedFilteredResult.forEach((product, pi) => {
+			if (product.id == productId) {
+				product.variants.forEach((variant, vi) => {
+					if (variant.id == variantId) {
+						updatedFilteredResult[pi].variants[vi].checked = checked
+					}
+				})
+
+
+				const someVariantsChecked = product.variants.some(variant => variant.checked)
+				if (someVariantsChecked) {
+					updatedFilteredResult[pi].checked = true
+					return;
+				}
+
+				const allVariantsUnChecked = product.variants.every(variant => !variant.checked)
+				if (allVariantsUnChecked) {
+					updatedFilteredResult[pi].checked = false
+				}
+			}
+		})
+
+		setFilteredResults(updatedFilteredResult)
+
+		// update the 'selectedProducts' state
+		setSelectedProducts(updatedFilteredResult.filter(product => product.checked))
 	}
 
 	return (
