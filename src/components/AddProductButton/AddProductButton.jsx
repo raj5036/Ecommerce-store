@@ -5,9 +5,11 @@ const AddProductButton = ({
 }) => {
 	return (
 		<button 
-			onClick={onAddProduct}
 			className='addProductButton'
-		>Add Product</button>
+			onClick={onAddProduct}
+		>
+			Add Product
+		</button>
 	)
 }
 

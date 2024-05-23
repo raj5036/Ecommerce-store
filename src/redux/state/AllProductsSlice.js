@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const AllProductsSlice = createSlice({
   name: 'allProducts',
   initialState: {
-	allProducts: []
+	products: []
   },
   reducers: {
 	addProduct: (state, action) => {
 		console.log(action)
-		state.allProducts = [
-			...state.allProducts,
+		state.products = [
+			...state.products,
 			action.payload
 		]
 	}

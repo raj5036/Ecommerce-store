@@ -1,32 +1,17 @@
 import './ProductsListColumn.css'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import ProductItem from '../ProductItem/ProductItem'
 import ProductPickerModal from '../ProductPickerModal/ProductPickerModal'
+import { useSelector } from 'react-redux'
 
-const ProductsListColumn = ({products}) => {
-	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
+const ProductsListColumn = () => {
+	const [showProductPickerModal, setShowProductPickerModal] = useState(true)
 	const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 
-	// useEffect(() => {
-	// 	getProducts('Hat', 1)
-	// 		.then(result => {
-	// 			console.log(result)
-	// 		})
-	// 		.catch()
-	// }, [])
-	useEffect(() => {
-		if (!products.length) {
-			products.push({
-				id: '',
-				title: '',
-				variants: [],
-				image: null
-			})
-		}
-	}, [products])
+	const selectedProducts = useSelector(state => state.selectedProducts.products)
 
     const onAddDiscountClick = (id) => () => {
         setDiscountOptionsDisplay({
@@ -66,8 +51,8 @@ const ProductsListColumn = ({products}) => {
 	return (
 		<div className='listContainer'>
 			{showProductPickerModal && <ProductPickerModal onCloseButtonClick={onCloseButtonClick}/>}
-			<SortableContext items={products} strategy={verticalListSortingStrategy}>
-				{products.map((product, index) => {
+			<SortableContext items={selectedProducts} strategy={verticalListSortingStrategy}>
+				{selectedProducts.map((product, index) => {
 					return <ProductItem 
 						key={index} 
 						id={product.id} 

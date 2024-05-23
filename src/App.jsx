@@ -1,6 +1,6 @@
 import './App.css'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import Header from './components/Header/Header'
 import ProductsListColumn from './components/ProductsListColumn/ProductsListColumn'
@@ -8,6 +8,9 @@ import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import AddProductButton from './components/AddProductButton/AddProductButton'
 import { useDispatch } from 'react-redux'
 import { addProduct } from './redux/state/AllProductsSlice'
+import { addSelectedProduct } from './redux/state/SelectedProductsSlice'
+import { useSelector } from 'react-redux'
+import { updateAllProducts } from './redux/state/SelectedProductsSlice'
 
 const FetchedProducts = [
   {
@@ -59,27 +62,23 @@ const FetchedProducts = [
 ]
 
 function App() {
-  const [products, setProducts] = useState([])
+  const selectedProducts = useSelector(state => state.selectedProducts.products)
   const dispatch = useDispatch()
   
   useEffect(() => {
     dispatch(addProduct(FetchedProducts))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) 
+  }, [dispatch]) 
 
-  const getProductIndex = (id) => products.findIndex((product) => product.id == id);
+  const getProductIndex = (id) => selectedProducts.findIndex((product) => product.id == id);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
     if (active.id === over.id) return;
 
-    setProducts((products) => {
-      const originalPos = getProductIndex(active.id);
-      const newPos = getProductIndex(over.id);
-
-      return arrayMove(products, originalPos, newPos);
-    });
+    const originalPos = getProductIndex(active.id);
+    const newPos = getProductIndex(over.id);
+    dispatch(updateAllProducts(arrayMove(selectedProducts, originalPos, newPos)))
   };
 
   const sensors = useSensors(
@@ -105,7 +104,12 @@ function App() {
   )
 
   const onAddProduct = () => {
-    console.log('onAddProduct')
+    dispatch(addSelectedProduct({
+      id: `${Number.MIN_SAFE_INTEGER}`,
+      title: '',
+      variants: [],
+      image: null
+    }))
   }
 
   return (
@@ -118,7 +122,7 @@ function App() {
           <div className='subHeaderItem'>Discount</div>
         </div>
         <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd} sensors={sensors}>
-          <ProductsListColumn products={products} />
+          <ProductsListColumn />
         </DndContext>
       </div>
       <AddProductButton onAddProduct={onAddProduct}/>
