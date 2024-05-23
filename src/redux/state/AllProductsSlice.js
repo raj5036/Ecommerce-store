@@ -12,9 +12,13 @@ const AllProductsSlice = createSlice({
 			...state.products,
 			action.payload
 		]
+	},
+	updateAllProducts: (state, action) => {
+		console.log(action)
+		state.products = action.payload
 	}
   }
 })
 
 export default AllProductsSlice.reducer
-export const { addProduct } = AllProductsSlice.actions
+export const { addProduct, updateAllProducts } = AllProductsSlice.actions

@@ -13,7 +13,7 @@ const SelectedProductsSlice = createSlice({
 			action.payload
 		]
 	},
-	updateAllProducts: (state, action) => {
+	updateAllSelectedProducts: (state, action) => {
 		console.log(action)
 		state.products = action.payload
 	}
@@ -23,5 +23,5 @@ const SelectedProductsSlice = createSlice({
 export default SelectedProductsSlice.reducer
 export const { 
 	addSelectedProduct, 
-	updateAllProducts 
+	updateAllSelectedProducts 
 } = SelectedProductsSlice.actions

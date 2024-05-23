@@ -7,10 +7,10 @@ import ProductsListColumn from './components/ProductsListColumn/ProductsListColu
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import AddProductButton from './components/AddProductButton/AddProductButton'
 import { useDispatch } from 'react-redux'
-import { addProduct } from './redux/state/AllProductsSlice'
+import { updateAllProducts } from './redux/state/AllProductsSlice'
 import { addSelectedProduct } from './redux/state/SelectedProductsSlice'
 import { useSelector } from 'react-redux'
-import { updateAllProducts } from './redux/state/SelectedProductsSlice'
+import { updateAllSelectedProducts } from './redux/state/SelectedProductsSlice'
 
 const FetchedProducts = [
   {
@@ -62,13 +62,18 @@ const FetchedProducts = [
 ]
 
 function App() {
+  const allProducts = useSelector(state => state.allProducts.products)
   const selectedProducts = useSelector(state => state.selectedProducts.products)
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
-    FetchedProducts.forEach(product => {
-      dispatch(addProduct(product))
-    })
+    if (!allProducts.length) {
+      console.log('called once', allProducts)
+      dispatch(updateAllProducts(FetchedProducts))
+      // FetchedProducts.forEach(product => {
+      //   dispatch(addProduct(product))
+      // })
+    } 
   }, []) 
 
   const getProductIndex = (id) => selectedProducts.findIndex((product) => product.id == id);
@@ -80,7 +85,7 @@ function App() {
 
     const originalPos = getProductIndex(active.id);
     const newPos = getProductIndex(over.id);
-    dispatch(updateAllProducts(arrayMove(selectedProducts, originalPos, newPos)))
+    dispatch(updateAllSelectedProducts(arrayMove(selectedProducts, originalPos, newPos)))
   };
 
   const sensors = useSensors(
