@@ -153,7 +153,10 @@ const ProductPickerModal = ({ onCloseButtonClick }) => {
 					<div className='modalFooter'>
 						<div>{selectedProducts.length + ' products selected'}</div>
 						<div className='buttons'>
-							<button className='button cancelButton'>Cancel</button>
+							<button 
+								className='button cancelButton'
+								onClick={onCloseButtonClick}
+							>Cancel</button>
 							<button 
 								className='button addButton'
 								disabled={selectedProducts.length ? false : true}
