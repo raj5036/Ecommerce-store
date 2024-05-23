@@ -1,10 +1,12 @@
 import './ProductItem.css'
 
-import React from 'react'
+import React, {useState} from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { useSortable } from '@dnd-kit/sortable'
 import DragIcon from '../../assets/svgs/dragIcon.svg'
 import PickerIcon from '../../assets/svgs/pickerIcon.svg'
+import UpArrow from '../../assets/svgs/upPointer.svg'
+import DownArrow from '../../assets/svgs/downPointer.svg'
 
 const ProductItem = ({
 	id, 
@@ -33,6 +35,12 @@ const ProductItem = ({
 
 	const discountTypes = ['% Off', 'Flat']
 
+	const [showVariant, setShowVariant] = useState(false)
+
+	const onShowVariant = () => {
+		setShowVariant(!showVariant)
+	}
+
 	return (
 		<div
 			ref={setNodeRef}
@@ -42,21 +50,21 @@ const ProductItem = ({
 			className='product'
 		>
 			<div className='dragPickerContainer'>
-			<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
-			<span>{`${index + 1}.`}</span>
-			<div className='productPicker' onClick={onProductPickerClick}>
-				<span className='pickerText'>{title}</span>
-				<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
+				<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
+				<span>{`${index + 1}.`}</span>
+				<div className='productPicker' onClick={onProductPickerClick}>
+					<span className='pickerText'>{title}</span>
+					<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
+				</div>
 			</div>
-		</div>
-		{!discountOptionsDisplay[id] 
-			? (<button 
-					className='addDiscountButton'
-					onClick={onAddDiscountClick(id)}
-				>
-						Add Discount
-				</button>) 
-			: (<React.Fragment>
+			{!discountOptionsDisplay[id] 
+				? (<button 
+						className='addDiscountButton'
+						onClick={onAddDiscountClick(id)}
+					>
+							Add Discount
+					</button>) 
+				: (<React.Fragment>
 				<input
 					className='discountInput' 
 					type='number' 
@@ -74,6 +82,15 @@ const ProductItem = ({
 					})}
 				</select>
 			</React.Fragment>)}
+			<div className='variantOptions' onClick={onShowVariant}>
+				{showVariant ? (<>
+					<img src={UpArrow} alt='up arrow' className='arrowIcon'/>
+					Hide variants</>)
+				: <>
+					<img src={DownArrow} alt='down arrow' className='arrowIcon'/>
+					Show variants
+				</>}
+			</div>
 		</div>
 	)
 }
