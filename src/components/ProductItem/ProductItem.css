@@ -59,5 +59,16 @@
 }
 
 .discountTypeDropdown {
+    height: 31px;
+    width: 95px;
+    border: 1px solid #0000001A;
+    box-shadow: 0px 2px 4px 0px #0000001A;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
 
+option {
+    font-size: 14px;
 }

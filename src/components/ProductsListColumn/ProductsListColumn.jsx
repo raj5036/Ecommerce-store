@@ -26,9 +26,23 @@ const ProductsListColumn = ({products}) => {
 	const onDiscountInputChange = (id, e) => {
 		setDiscounts({
 			...discounts,
-			[id]: e.target.value
+			[id]: {
+				...discounts[id],
+				discountAmount: e.target.value
+			}
 		})
 	}
+
+	const onDiscountTypeChange = (id, e) => {
+		setDiscounts({
+			...discounts,
+			[id]: {
+				...discounts[id],
+				discountType: e.target.value
+			}
+		})
+	}
+
 	return (
 		<div className='listContainer'>
 			<SortableContext items={products} strategy={verticalListSortingStrategy}>
@@ -39,8 +53,9 @@ const ProductsListColumn = ({products}) => {
 						title={product.title}
 						discountOptionsDisplay={discountOptionsDisplay}
 						discounts={discounts}
-						onDiscountInputChange={onDiscountInputChange}
 						onAddDiscountClick={onAddDiscountClick}
+						onDiscountInputChange={onDiscountInputChange}
+						onDiscountTypeChange={onDiscountTypeChange}
 					/>
 				})}
 			</SortableContext>

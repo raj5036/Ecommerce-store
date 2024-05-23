@@ -11,8 +11,9 @@ const ProductItem = ({
 	title,
 	discountOptionsDisplay,
 	discounts,
-	onDiscountInputChange,
 	onAddDiscountClick,
+	onDiscountInputChange,
+	onDiscountTypeChange,
 }) => {
 	const { 
 		attributes, 
@@ -27,6 +28,8 @@ const ProductItem = ({
 		transition,
 		transform: CSS.Transform.toString(transform),
 	}
+
+	const discountTypes = ['% Off', 'Flat']
 
 	return (
 		<div
@@ -57,9 +60,17 @@ const ProductItem = ({
 					type='number' 
 					onChange={e => onDiscountInputChange(id, e)}
 					placeholder='00'
-					value={discounts[id]}
+					value={(discounts[id] && discounts[id].discountAmount) || ''}
 				/>
-				<div className='discountTypeDropdown'>Flat</div>
+				<select 
+					className='discountTypeDropdown' 
+					value={(discounts[id] && discounts[id].discountType) || discountTypes[0]}
+					onChange={e => onDiscountTypeChange(id, e)} 
+				>
+					{discountTypes.map((option, index) => {
+						return <option key={'discountOptions-' + index}>{option}</option>
+					})}
+				</select>
 			</React.Fragment>)}
 		</div>
 	)
