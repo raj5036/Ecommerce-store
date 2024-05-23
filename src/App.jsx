@@ -1,11 +1,13 @@
 import './App.css'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import Header from './components/Header/Header'
 import ProductsListColumn from './components/ProductsListColumn/ProductsListColumn'
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import AddProductButton from './components/AddProductButton/AddProductButton'
+import { useDispatch } from 'react-redux'
+import { addProduct } from './redux/state/AllProductsSlice'
 
 const FetchedProducts = [
   {
@@ -58,6 +60,12 @@ const FetchedProducts = [
 
 function App() {
   const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(addProduct(FetchedProducts))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) 
 
   const getProductIndex = (id) => products.findIndex((product) => product.id == id);
 
