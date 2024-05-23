@@ -58,7 +58,6 @@ const ProductsListColumn = () => {
 	}
 
 	const onAddButtonClick = (pickedProducts) => () => {
-
 		console.log('pickedProducts', removedCheckedKey(pickedProducts))
 		removedCheckedKey(pickedProducts).forEach(product => {
 			dispatch(addSelectedProduct(product))
@@ -82,6 +81,7 @@ const ProductsListColumn = () => {
 						key={index} 
 						id={product.id} 
 						title={product.title}
+						variants={product.variants}
 						discountOptionsDisplay={discountOptionsDisplay}
 						discounts={discounts}
 						onAddDiscountClick={onAddDiscountClick}

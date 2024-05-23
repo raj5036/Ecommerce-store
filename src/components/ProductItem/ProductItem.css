@@ -1,3 +1,7 @@
+.productItemContainer {
+
+}
+
 .product {
     display: flex;
     justify-content: start;
@@ -92,4 +96,8 @@ option {
 .arrowIcon {
     height: 10px;
     width: 10px;
+}
+
+.variantsListContainer {
+
 }

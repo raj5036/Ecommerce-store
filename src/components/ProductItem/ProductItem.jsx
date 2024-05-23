@@ -2,15 +2,18 @@ import './ProductItem.css'
 
 import React, {useState} from 'react'
 import { CSS } from '@dnd-kit/utilities'
-import { useSortable } from '@dnd-kit/sortable'
+import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import DragIcon from '../../assets/svgs/dragIcon.svg'
 import PickerIcon from '../../assets/svgs/pickerIcon.svg'
 import UpArrow from '../../assets/svgs/upPointer.svg'
 import DownArrow from '../../assets/svgs/downPointer.svg'
+import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import VariantItem from './VariantItem/VariantItem'
 
 const ProductItem = ({
 	id, 
 	title,
+	variants,
 	discountOptionsDisplay,
 	discounts,
 	onAddDiscountClick,
@@ -27,6 +30,30 @@ const ProductItem = ({
 		index
 	} =
     useSortable({ id })
+
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				delay: 350,
+			}
+		}),
+		useSensor(MouseSensor, {
+			activationConstraint: {
+				delay: 900,
+				distance: 8,
+			}
+		}),
+		useSensor(TouchSensor, {
+			activationConstraint: {
+				delay: 900,
+			}
+		}),
+		useSensor(KeyboardSensor, {
+			coordinateGetter: sortableKeyboardCoordinates
+		})
+	)
+
+	const handleDragEnd = () => {}
 
 	const style = {
 		transition,
@@ -47,50 +74,71 @@ const ProductItem = ({
 			style={style}
 			{...attributes}
 			{...listeners}
-			className='product'
+			className='productItemContainer'
 		>
-			<div className='dragPickerContainer'>
-				<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
-				<span>{`${index + 1}.`}</span>
-				<div className='productPicker' onClick={onProductPickerClick}>
-					<span className='pickerText'>{title}</span>
-					<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
+			<div className='product'>
+				<div className='dragPickerContainer'>
+					<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
+					<span>{`${index + 1}.`}</span>
+					<div className='productPicker' onClick={onProductPickerClick}>
+						<span className='pickerText'>{title}</span>
+						<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
+					</div>
+				</div>
+				{!discountOptionsDisplay[id] 
+					? (<button 
+							className='addDiscountButton'
+							onClick={onAddDiscountClick(id)}
+						>
+								Add Discount
+						</button>) 
+					: (<React.Fragment>
+					<input
+						className='discountInput' 
+						type='number' 
+						onChange={e => onDiscountInputChange(id, e)}
+						placeholder='00'
+						value={(discounts[id] && discounts[id].discountAmount) || ''}
+					/>
+					<select 
+						className='discountTypeDropdown' 
+						value={(discounts[id] && discounts[id].discountType) || discountTypes[0]}
+						onChange={e => onDiscountTypeChange(id, e)} 
+					>
+						{discountTypes.map((option, index) => {
+							return <option key={'discountOptions-' + index}>{option}</option>
+						})}
+					</select>
+				</React.Fragment>)}
+				<div className='variantOptions' onClick={onShowVariant}>
+					{showVariant ? (<>
+						<img src={UpArrow} alt='up arrow' className='arrowIcon'/>
+						Hide variants</>)
+					: <>
+						<img src={DownArrow} alt='down arrow' className='arrowIcon'/>
+						Show variants
+					</>}
 				</div>
 			</div>
-			{!discountOptionsDisplay[id] 
-				? (<button 
-						className='addDiscountButton'
-						onClick={onAddDiscountClick(id)}
-					>
-							Add Discount
-					</button>) 
-				: (<React.Fragment>
-				<input
-					className='discountInput' 
-					type='number' 
-					onChange={e => onDiscountInputChange(id, e)}
-					placeholder='00'
-					value={(discounts[id] && discounts[id].discountAmount) || ''}
-				/>
-				<select 
-					className='discountTypeDropdown' 
-					value={(discounts[id] && discounts[id].discountType) || discountTypes[0]}
-					onChange={e => onDiscountTypeChange(id, e)} 
-				>
-					{discountTypes.map((option, index) => {
-						return <option key={'discountOptions-' + index}>{option}</option>
-					})}
-				</select>
-			</React.Fragment>)}
-			<div className='variantOptions' onClick={onShowVariant}>
-				{showVariant ? (<>
-					<img src={UpArrow} alt='up arrow' className='arrowIcon'/>
-					Hide variants</>)
-				: <>
-					<img src={DownArrow} alt='down arrow' className='arrowIcon'/>
-					Show variants
-				</>}
-			</div>
+			{/* Show variants */}
+			{
+				showVariant && variants.length > 0 && 
+				<div className='variantsListContainer'>
+					<DndContext collisionDetection={closestCorners} sensors={sensors} onDragEnd={handleDragEnd}>
+						<SortableContext items={variants} strategy={verticalListSortingStrategy}>
+							{variants.map((variant, index)=> {
+								return <VariantItem
+									key={'variantItem' + index}
+									id={variant.id}
+									productId={variant.productId}
+									title={variant.title}
+									price={variant.price}
+								/>
+							})}
+						</SortableContext>
+					</DndContext>
+				</div>
+			}
 		</div>
 	)
 }
