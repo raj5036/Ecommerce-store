@@ -19,7 +19,6 @@
 	height: 422px;
 	width: 646px; 
 	border-radius: 5px;
-	overflow: scroll;
 }
 
 /* The Close Button */
@@ -54,14 +53,19 @@
 
 .productsListContainer {
 	margin-top: 20px;
+	height: 270px;
+	overflow-y: scroll;
 }
 
 .productContainer {
+	height: fit-content;
+	border-bottom: solid 1px #ccc;
+}
+
+.mainProduct {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	height: 40px;
-	border-bottom: solid 1px #ccc;
 }
 
 .checkbox {
@@ -77,3 +81,39 @@
     width: 30px;
 }
 
+.variantsContainer {
+	padding-left: 30px;
+}
+
+.variant {
+	display: flex;
+	align-items: center;
+}
+
+.modalFooter {
+	display: flex;
+    justify-content: space-between;
+	align-items: center;
+	height: 45px;
+	margin-top: 6px;
+}
+
+.buttons {
+
+}
+
+.button {
+	height: 40px;
+	cursor: pointer;
+	border-radius: 5px;
+    border: solid 1px #ccc;
+}
+
+.cancelButton {
+	width: 100px;
+	margin-right: 12px;
+}
+
+.addButton {
+	width: 65px;
+}
