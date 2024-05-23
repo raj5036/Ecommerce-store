@@ -14,6 +14,7 @@ const ProductItem = ({
 	onAddDiscountClick,
 	onDiscountInputChange,
 	onDiscountTypeChange,
+	onProductPickerClick,
 }) => {
 	const { 
 		attributes, 
@@ -43,7 +44,7 @@ const ProductItem = ({
 			<div className='dragPickerContainer'>
 			<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
 			<span>{`${index + 1}.`}</span>
-			<div className='productPicker'>
+			<div className='productPicker' onClick={onProductPickerClick}>
 				<span className='pickerText'>{title}</span>
 				<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
 			</div>

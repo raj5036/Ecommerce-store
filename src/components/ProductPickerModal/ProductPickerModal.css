@@ -1,0 +1,57 @@
+/* The Modal (background) */
+.modal {
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	/* overflow: auto; Enable scroll if needed */
+	cursor: default;
+}
+
+/* Modal Content/Box */
+.modalContent {
+	background-color: #fff;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 545px; 
+	height: 383px;
+}
+
+.modalHeader {
+	text-align: left;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.headerDescription {
+	text-align: left;
+	margin: 8px 0 14px 0;
+}
+
+.modalSubHeader {
+	margin-bottom: 10px; 
+	text-align: left;
+	font-weight: bold;
+    font-size: 19px;
+}
+
+.actionItems {
+
+}
+
+/* The Close Button */
+.close { 
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.actionItems {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}

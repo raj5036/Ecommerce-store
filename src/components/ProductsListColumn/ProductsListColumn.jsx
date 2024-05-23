@@ -1,10 +1,12 @@
 import './ProductsListColumn.css'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import ProductItem from '../ProductItem/ProductItem'
+import ProductPickerModal from '../ProductPickerModal/ProductPickerModal'
 
 const ProductsListColumn = ({products}) => {
+	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
 	const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 
@@ -15,6 +17,16 @@ const ProductsListColumn = ({products}) => {
 	// 		})
 	// 		.catch()
 	// }, [])
+	useEffect(() => {
+		if (!products.length) {
+			products.push({
+				id: '',
+				title: '',
+				variants: [],
+				image: null
+			})
+		}
+	}, [products])
 
     const onAddDiscountClick = (id) => () => {
         setDiscountOptionsDisplay({
@@ -43,8 +55,17 @@ const ProductsListColumn = ({products}) => {
 		})
 	}
 
+	const onProductPickerClick = () => {
+		setShowProductPickerModal(true)
+	}
+
+	const onCloseButtonClick = () => {
+		setShowProductPickerModal(false)
+	}
+
 	return (
 		<div className='listContainer'>
+			{showProductPickerModal && <ProductPickerModal onCloseButtonClick={onCloseButtonClick}/>}
 			<SortableContext items={products} strategy={verticalListSortingStrategy}>
 				{products.map((product, index) => {
 					return <ProductItem 
@@ -56,6 +77,7 @@ const ProductsListColumn = ({products}) => {
 						onAddDiscountClick={onAddDiscountClick}
 						onDiscountInputChange={onDiscountInputChange}
 						onDiscountTypeChange={onDiscountTypeChange}
+						onProductPickerClick={onProductPickerClick}
 					/>
 				})}
 			</SortableContext>
