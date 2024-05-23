@@ -66,8 +66,10 @@ function App() {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(addProduct(FetchedProducts))
-  }, [dispatch]) 
+    FetchedProducts.forEach(product => {
+      dispatch(addProduct(product))
+    })
+  }, []) 
 
   const getProductIndex = (id) => selectedProducts.findIndex((product) => product.id == id);
 
