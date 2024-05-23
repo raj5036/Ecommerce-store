@@ -20,7 +20,8 @@ const ProductItem = ({
 		listeners, 
 		setNodeRef, 
 		transform, 
-		transition 
+		transition,
+		index
 	} =
     useSortable({ id })
 
@@ -41,7 +42,7 @@ const ProductItem = ({
 		>
 			<div className='dragPickerContainer'>
 			<img src={DragIcon} alt='Drag Icon' className='dragIcon'/>
-			<span>{`${id}.`}</span>
+			<span>{`${index + 1}.`}</span>
 			<div className='productPicker'>
 				<span className='pickerText'>{title}</span>
 				<img src={PickerIcon} alt='Picker Icon' className='pickerIcon'/>
