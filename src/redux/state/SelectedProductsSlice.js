@@ -36,7 +36,14 @@ const SelectedProductsSlice = createSlice({
 		const productIndex = state.products.findIndex(product => product.productId == productId)
 
 		state.products[productIndex].variants = state.products[productIndex].variants.filter(variant => variant.id != variantId)
-	}
+	},
+	replaceProductInSelectedProducts: (state, action) => {
+		console.log(action)
+		const { replaceProductId, newProductsArray } = action.payload
+
+		const replaceProductIndex = state.products.findIndex(product => product.productId == replaceProductId)
+		state.products.splice(replaceProductIndex, 1, ...newProductsArray)
+	},
   }
 })
 
@@ -46,5 +53,6 @@ export const {
 	updateAllSelectedProducts,
 	updateVariants,
 	removeProductFromSelectedProducts,
-	removeVariantFromSelectedProducts
+	removeVariantFromSelectedProducts,
+	replaceProductInSelectedProducts,
 } = SelectedProductsSlice.actions

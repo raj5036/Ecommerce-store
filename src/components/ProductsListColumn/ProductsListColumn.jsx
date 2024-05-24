@@ -6,13 +6,14 @@ import ProductItem from '../ProductItem/ProductItem'
 import ProductPickerModal from '../ProductPickerModal/ProductPickerModal'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { addSelectedProduct, removeProductFromSelectedProducts } from '../../redux/state/SelectedProductsSlice'
+import { addSelectedProduct, removeProductFromSelectedProducts, replaceProductInSelectedProducts } from '../../redux/state/SelectedProductsSlice'
 
 const ProductsListColumn = () => {
 	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
 	const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
 	const [disableProductItemDrag, setDisableProductItemDrag] = useState(false)
+	const [clickedProductId, setClickedProductId] = useState(null)
 
 	const selectedProducts = useSelector(state => state.selectedProducts.products)
 	const dispatch = useDispatch()
@@ -44,8 +45,9 @@ const ProductsListColumn = () => {
 		})
 	}
 
-	const onProductPickerClick = () => {
+	const onProductPickerClick = (productId) => () => {
 		setShowProductPickerModal(true)
+		setClickedProductId(productId)
 	}
 
 	const removedCheckedKey = (array) => {
@@ -66,14 +68,33 @@ const ProductsListColumn = () => {
 			productId: Number.MIN_SAFE_INTEGER
 		}))
 		
-		let length = selectedProducts.length
-		removedCheckedKey(pickedProducts).forEach(({id, ...otherAttrs}) => {
-			dispatch(addSelectedProduct({
-				id: length++,
-				productId: id,
-				...otherAttrs
+		// Replace current productItem from selectedProducts with new items
+		// let length = selectedProducts.length
+		if (clickedProductId == Number.MIN_SAFE_INTEGER) {
+			// Adding a new productItem
+			removedCheckedKey(pickedProducts).forEach(({id, ...otherAttrs}) => {
+				dispatch(addSelectedProduct({
+					id: Math.random(),
+					productId: id,
+					...otherAttrs
+				}))
+			})
+		} else {
+			// Replacing old ProductItem with new Once
+			dispatch(replaceProductInSelectedProducts({
+				replaceProductId: clickedProductId,
+				newProductsArray: removedCheckedKey(pickedProducts).map(({id, ...otherAttrs}) => {
+					return {
+						id: Math.random(),
+						productId: id,
+						...otherAttrs
+					}
+				})
 			}))
-		})
+		}
+		
+		
+		
 
 		// Close modal
 		setShowProductPickerModal(false)	
@@ -81,6 +102,7 @@ const ProductsListColumn = () => {
 
 	const onCloseButtonClick = () => {
 		setShowProductPickerModal(false)
+		setClickedProductId(null)
 	}
 
 	const onDeleteProduct = (productId) => () => {
