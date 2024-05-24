@@ -56,36 +56,48 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 	}
 
 	const onProductVariantSelectChange = (productId, variantId, checked) => {
+		const productIndex = filteredResults.findIndex(product => product.id == productId)
+		const variantIndex = filteredResults[productIndex].variants.findIndex(variant => variant.id == variantId)
 
-		let updatedFilteredResult = filteredResults.slice()
+		setFilteredResults(prevFilteredResults => {
+			const updatedProducts = [...prevFilteredResults] //Create a deep copy of Products
+			const updatedVariants = [...updatedProducts[productIndex].variants] //Create a deep copy of Variants
 
-		// Update the checkboxes
-		updatedFilteredResult.forEach((product, pi) => {
-			if (product.id == productId) {
-				product.variants.forEach((variant, vi) => {
-					if (variant.id == variantId) {
-						updatedFilteredResult[pi].variants[vi].checked = checked
-					}
-				})
-
-
-				const someVariantsChecked = product.variants.some(variant => variant.checked)
-				if (someVariantsChecked) {
-					updatedFilteredResult[pi].checked = true
-					return;
-				}
-
-				const allVariantsUnChecked = product.variants.every(variant => !variant.checked)
-				if (allVariantsUnChecked) {
-					updatedFilteredResult[pi].checked = false
-				}
+			updatedVariants[variantIndex] = {
+				...updatedVariants[variantIndex],
+				checked
 			}
+
+			updatedProducts[productIndex] = {
+				...updatedProducts[productIndex],
+				variants: updatedVariants
+			}
+
+			const someVariantsChecked = updatedProducts[productIndex].variants.some(variant => variant.checked)
+			if (someVariantsChecked) {
+				updatedProducts[productIndex] = {
+					...updatedProducts[productIndex],
+					checked: true
+				}
+
+				return updatedProducts;
+			}
+
+			const allVariantsUnChecked = updatedProducts[productIndex].variants.every(variant => !variant.checked)
+			if (allVariantsUnChecked) {
+				updatedProducts[productIndex] = {
+					...updatedProducts[productIndex],
+					checked: false
+				}
+
+				return updatedProducts;
+			}
+
+			return updatedProducts;
 		})
 
-		setFilteredResults(updatedFilteredResult)
-
 		// update the 'selectedProducts' state
-		setSelectedProducts(updatedFilteredResult.filter(product => product.checked))
+		setSelectedProducts(filteredResults.filter(product => product.checked))
 	}
 
 	return (
