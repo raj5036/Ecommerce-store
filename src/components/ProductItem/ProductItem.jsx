@@ -2,7 +2,7 @@ import './ProductItem.css'
 
 import React, {useState} from 'react'
 import { CSS } from '@dnd-kit/utilities'
-import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import DragIcon from '../../assets/svgs/dragIcon.svg'
 import PickerIcon from '../../assets/svgs/pickerIcon.svg'
@@ -11,10 +11,11 @@ import DownArrow from '../../assets/svgs/downPointer.svg'
 import CrossIcon from '../../assets/svgs/crossIcon.svg'
 import VariantItem from './VariantItem/VariantItem'
 import { useDispatch } from 'react-redux'
-import { removeVariantFromSelectedProducts } from '../../redux/state/SelectedProductsSlice'
+import { removeVariantFromSelectedProducts, updateVariants } from '../../redux/state/SelectedProductsSlice'
 
 const ProductItem = ({
 	id, 
+	productId,
 	title,
 	variants,
 	discountOptionsDisplay,
@@ -34,6 +35,8 @@ const ProductItem = ({
 		index
 	} =
     useSortable({ id })
+
+	const dispatch = useDispatch()
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, {
@@ -57,7 +60,20 @@ const ProductItem = ({
 		})
 	)
 
-	const handleDragEnd = () => {}
+	const getVariantIndex = (id) => {
+		return variants.findIndex(variant => variant.id == id)
+	}
+	const handleDragEnd = (event) => {
+		const { active, over } = event;
+
+		if (active.id === over.id) return;
+
+		const originalPos = getVariantIndex(active.id)
+		const newPos = getVariantIndex(over.id)
+
+		const newVariantsArray = arrayMove(variants, originalPos, newPos)
+		dispatch(updateVariants({productId, newVariantsArray}))
+	}
 
 	const style = {
 		transition,
@@ -68,8 +84,6 @@ const ProductItem = ({
 
 	const [showVariant, setShowVariant] = useState(false)
 
-	const dispatch = useDispatch()
-
 	const onShowVariant = () => {
 		setShowVariant(!showVariant)
 	}
@@ -77,7 +91,7 @@ const ProductItem = ({
 	const onDeleteVariant = (variantId) => () => {
 		console.log('variantId', variantId)
 		dispatch(removeVariantFromSelectedProducts({
-			productId: id,
+			productId: productId,
 			variantId
 		}))
 	}

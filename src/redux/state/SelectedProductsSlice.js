@@ -17,6 +17,13 @@ const SelectedProductsSlice = createSlice({
 		console.log(action)
 		state.products = action.payload
 	},
+	updateVariants: (state, action) => {
+		console.log(action)
+		const { productId, newVariantsArray } = action.payload
+
+		const productIndex = state.products.findIndex(product => product.productId == productId)
+		state.products[productIndex].variants = newVariantsArray
+	},
 	removeProductFromSelectedProducts: (state, action) => {
 		console.log(action)
 		const { productId } = action.payload
@@ -37,6 +44,7 @@ export default SelectedProductsSlice.reducer
 export const { 
 	addSelectedProduct, 
 	updateAllSelectedProducts,
+	updateVariants,
 	removeProductFromSelectedProducts,
 	removeVariantFromSelectedProducts
 } = SelectedProductsSlice.actions

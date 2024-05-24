@@ -96,7 +96,8 @@ const ProductsListColumn = () => {
 				{selectedProducts.map((product, index) => {
 					return <ProductItem 
 						key={index} 
-						id={product.id} 
+						id={product.id}
+						productId={product.productId} 
 						title={product.title}
 						variants={product.variants}
 						discountOptionsDisplay={discountOptionsDisplay}
