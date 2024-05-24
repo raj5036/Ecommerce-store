@@ -82,10 +82,11 @@ function App() {
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
-    if (active.id === over.id) return;
+    if (!active || !over) return
+    if (active.id === over.id) return
 
-    const originalPos = getProductIndex(active.id);
-    const newPos = getProductIndex(over.id);
+    const originalPos = getProductIndex(active.id)
+    const newPos = getProductIndex(over.id)
     dispatch(updateAllSelectedProducts(arrayMove(selectedProducts, originalPos, newPos)))
   };
 
