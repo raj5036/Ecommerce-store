@@ -17,7 +17,7 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 			checked: false,
 			variants: product.variants.map(variant => ({
 				...variant,
-				checked: true
+				checked: false
 			}))
 		}))
 		setFilteredResults(temp)
