@@ -79,8 +79,6 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 					...updatedProducts[productIndex],
 					checked: true
 				}
-
-				return updatedProducts;
 			}
 
 			const allVariantsUnChecked = updatedProducts[productIndex].variants.every(variant => !variant.checked)
@@ -89,15 +87,14 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 					...updatedProducts[productIndex],
 					checked: false
 				}
-
-				return updatedProducts;
 			}
 
+			// update the 'selectedProducts' state
+			setSelectedProducts(updatedProducts.filter(product => product.checked))	
+			
 			return updatedProducts;
 		})
-
-		// update the 'selectedProducts' state
-		setSelectedProducts(filteredResults.filter(product => product.checked))
+		
 	}
 
 	return (
