@@ -60,15 +60,16 @@ const ProductsListColumn = () => {
 
 	const onAddButtonClick = (pickedProducts) => () => {
 		console.log('pickedProducts', removedCheckedKey(pickedProducts))
+		
 		//Remove empty ProductItem
 		dispatch(removeProductFromSelectedProducts({
 			productId: Number.MIN_SAFE_INTEGER
 		}))
 		
-		const length = selectedProducts.length
+		let length = selectedProducts.length
 		removedCheckedKey(pickedProducts).forEach(({id, ...otherAttrs}) => {
 			dispatch(addSelectedProduct({
-				id: length,
+				id: length++,
 				productId: id,
 				...otherAttrs
 			}))
