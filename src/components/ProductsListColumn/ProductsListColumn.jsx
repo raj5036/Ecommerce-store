@@ -59,9 +59,16 @@ const ProductsListColumn = () => {
 
 	const onAddButtonClick = (pickedProducts) => () => {
 		console.log('pickedProducts', removedCheckedKey(pickedProducts))
+		//Remove empty ProductItem
+		dispatch(removeProductFromSelectedProducts({
+			productId: Number.MIN_SAFE_INTEGER
+		}))
+		
 		removedCheckedKey(pickedProducts).forEach(product => {
 			dispatch(addSelectedProduct(product))
 		})
+
+		// Close modal
 		setShowProductPickerModal(false)	
 	}
 
