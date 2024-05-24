@@ -62,17 +62,16 @@ const ProductsListColumn = () => {
 
 	const onAddButtonClick = (pickedProducts) => () => {
 		console.log('pickedProducts', removedCheckedKey(pickedProducts))
+		pickedProducts = removedCheckedKey(pickedProducts)
 
 		//Remove empty ProductItem
 		dispatch(removeProductFromSelectedProducts({
 			productId: Number.MIN_SAFE_INTEGER
 		}))
-		
-		// Replace current productItem from selectedProducts with new items
-		// let length = selectedProducts.length
+
 		if (clickedProductId == Number.MIN_SAFE_INTEGER) {
 			// Adding a new productItem
-			removedCheckedKey(pickedProducts).forEach(({id, ...otherAttrs}) => {
+			pickedProducts.forEach(({id, ...otherAttrs}) => {
 				dispatch(addSelectedProduct({
 					id: Math.random(),
 					productId: id,
@@ -83,7 +82,7 @@ const ProductsListColumn = () => {
 			// Replacing old ProductItem with new Once
 			dispatch(replaceProductInSelectedProducts({
 				replaceProductId: clickedProductId,
-				newProductsArray: removedCheckedKey(pickedProducts).map(({id, ...otherAttrs}) => {
+				newProductsArray: pickedProducts.map(({id, ...otherAttrs}) => {
 					return {
 						id: Math.random(),
 						productId: id,
