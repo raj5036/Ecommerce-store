@@ -59,7 +59,30 @@ const FetchedProducts = [
           "productId": 80,
           "src": "https://cdn11.bigcommerce.com/s-p1xcugzp89/products/80/images/272/roundterrariumlarge.1647248662.386.513.jpg?c=1"
       }
-  }
+  },
+  {
+    "id": 90,
+    "title": "Necklace",
+    "variants": [
+        {
+            "id": 111,
+            "productId": 90,
+            "title": "Diamond necklace",
+            "price": "109"
+        },
+        {
+            "id": 1112,
+            "productId": 90,
+            "title": "Gold necklace",
+            "price": "109"
+        },
+    ],
+    "image": {
+        "id": 222,
+        "productId": 90,
+        "src": "https://cdn11.bigcommerce.com/s-p1xcugzp89/products/80/images/272/roundterrariumlarge.1647248662.386.513.jpg?c=1"
+    }
+}
 ]
 
 function App() {
