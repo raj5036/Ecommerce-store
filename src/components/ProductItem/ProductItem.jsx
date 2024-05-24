@@ -10,6 +10,8 @@ import UpArrow from '../../assets/svgs/upPointer.svg'
 import DownArrow from '../../assets/svgs/downPointer.svg'
 import CrossIcon from '../../assets/svgs/crossIcon.svg'
 import VariantItem from './VariantItem/VariantItem'
+import { useDispatch } from 'react-redux'
+import { removeVariantFromSelectedProducts } from '../../redux/state/SelectedProductsSlice'
 
 const ProductItem = ({
 	id, 
@@ -66,12 +68,18 @@ const ProductItem = ({
 
 	const [showVariant, setShowVariant] = useState(false)
 
+	const dispatch = useDispatch()
+
 	const onShowVariant = () => {
 		setShowVariant(!showVariant)
 	}
 
 	const onDeleteVariant = (variantId) => () => {
 		console.log('variantId', variantId)
+		dispatch(removeVariantFromSelectedProducts({
+			productId: id,
+			variantId
+		}))
 	}
 
 	return (

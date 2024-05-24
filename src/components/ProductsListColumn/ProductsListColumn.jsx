@@ -6,7 +6,7 @@ import ProductItem from '../ProductItem/ProductItem'
 import ProductPickerModal from '../ProductPickerModal/ProductPickerModal'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { addSelectedProduct } from '../../redux/state/SelectedProductsSlice'
+import { addSelectedProduct, removeProductFromSelectedProducts } from '../../redux/state/SelectedProductsSlice'
 
 const ProductsListColumn = () => {
 	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
@@ -71,6 +71,7 @@ const ProductsListColumn = () => {
 
 	const onDeleteProduct = (productId) => () => {
 		console.log('productId', productId)
+		dispatch(removeProductFromSelectedProducts({ productId }))
 	}
 
 	return (
