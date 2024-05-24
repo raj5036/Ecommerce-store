@@ -90,9 +90,15 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 			}
 
 			// update the 'selectedProducts' state
-			setSelectedProducts(updatedProducts.filter(product => product.checked))	
-			
-			return updatedProducts;
+			setSelectedProducts(updatedProducts.map(product => {
+				if (product.id === productId) {
+					const filteredVariants = product.variants.filter(variant => variant.checked);
+					return { ...product, variants: filteredVariants };
+				}
+				return product;
+			}).filter(product => product.checked))
+
+			return updatedProducts
 		})
 		
 	}
