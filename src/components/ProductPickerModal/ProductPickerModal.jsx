@@ -28,7 +28,7 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 			setFilteredResults(allProducts)
 			return;
 		}
-		setFilteredResults(filteredResults.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase())))
+		setFilteredResults(allProducts.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase())))
 	}, [searchInput])
 
 	const onProductSelectChange = (productId, checked) => {
