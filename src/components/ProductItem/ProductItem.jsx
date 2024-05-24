@@ -67,12 +67,10 @@ const ProductItem = ({
 	}
 
 	const handleDragStart = () => {
-		console.log('handleDragStart')
 		setProductItemDraggability(true)
 	}
 
 	const handleDragEnd = (event) => {
-		console.log('handleDragEnd')
 		setProductItemDraggability(false)
 		
 		const { active, over } = event;
@@ -100,7 +98,6 @@ const ProductItem = ({
 	}
 
 	const onDeleteVariant = (variantId) => () => {
-		console.log('variantId', variantId)
 		dispatch(removeVariantFromSelectedProducts({
 			productId: productId,
 			variantId

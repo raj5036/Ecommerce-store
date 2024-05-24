@@ -61,7 +61,6 @@ const ProductsListColumn = () => {
 	}
 
 	const onAddButtonClick = (pickedProducts) => () => {
-		console.log('pickedProducts', removedCheckedKey(pickedProducts))
 		pickedProducts = removedCheckedKey(pickedProducts)
 
 		//Remove empty ProductItem
@@ -105,7 +104,6 @@ const ProductsListColumn = () => {
 	}
 
 	const onDeleteProduct = (productId) => () => {
-		console.log('productId', productId)
 		dispatch(removeProductFromSelectedProducts({ productId }))
 	}
 

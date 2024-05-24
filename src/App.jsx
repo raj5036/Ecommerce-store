@@ -21,11 +21,7 @@ function App() {
 
   useEffect(() => {
     if (!allProducts.length) {
-      console.log('called once', allProducts)
       dispatch(updateAllProducts(FetchedProducts))
-      // FetchedProducts.forEach(product => {
-      //   dispatch(addProduct(product))
-      // })
     } 
   }, []) 
 
