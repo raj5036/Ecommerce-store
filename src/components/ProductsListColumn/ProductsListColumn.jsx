@@ -12,6 +12,7 @@ const ProductsListColumn = () => {
 	const [showProductPickerModal, setShowProductPickerModal] = useState(false)
 	const [discountOptionsDisplay, setDiscountOptionsDisplay] = useState({})
 	const [discounts, setDiscounts] = useState({})
+	const [disableProductItemDrag, setDisableProductItemDrag] = useState(false)
 
 	const selectedProducts = useSelector(state => state.selectedProducts.products)
 	const dispatch = useDispatch()
@@ -86,13 +87,21 @@ const ProductsListColumn = () => {
 		dispatch(removeProductFromSelectedProducts({ productId }))
 	}
 
+	const setProductItemDraggability = (value) => {
+		setDisableProductItemDrag(value)
+	}
+
 	return (
 		<div className='listContainer'>
 			{showProductPickerModal && <ProductPickerModal 
 				onAddButtonClick={onAddButtonClick}
 				onCloseButtonClick={onCloseButtonClick}
 			/>}
-			<SortableContext items={selectedProducts} strategy={verticalListSortingStrategy}>
+			<SortableContext 
+				items={selectedProducts} 
+				strategy={verticalListSortingStrategy} 
+				disabled={disableProductItemDrag}
+			>
 				{selectedProducts.map((product, index) => {
 					return <ProductItem 
 						key={index} 
@@ -107,6 +116,7 @@ const ProductsListColumn = () => {
 						onDiscountTypeChange={onDiscountTypeChange}
 						onProductPickerClick={onProductPickerClick}
 						onDeleteProduct={onDeleteProduct}
+						setProductItemDraggability={setProductItemDraggability}
 					/>
 				})}
 			</SortableContext>

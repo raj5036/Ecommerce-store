@@ -25,8 +25,9 @@ const ProductItem = ({
 	onDiscountTypeChange,
 	onProductPickerClick,
 	onDeleteProduct,
+	setProductItemDraggability,
 }) => {
-	const [isVariantItemDragging, setIsVariantItemDragging] = useState(false)
+	const dispatch = useDispatch()
 	const { 
 		attributes, 
 		listeners, 
@@ -35,9 +36,8 @@ const ProductItem = ({
 		transition,
 		index
 	} =
-    useSortable({ id, disabled: !isVariantItemDragging })
+    useSortable({ id })
 
-	const dispatch = useDispatch()
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, {
@@ -67,12 +67,12 @@ const ProductItem = ({
 
 	const handleDragStart = () => {
 		console.log('handleDragStart')
-		setIsVariantItemDragging(true)
+		setProductItemDraggability(true)
 	}
 
 	const handleDragEnd = (event) => {
 		console.log('handleDragEnd')
-		setIsVariantItemDragging(false)
+		setProductItemDraggability(false)
 		
 		const { active, over } = event;
 
