@@ -64,8 +64,13 @@ const ProductsListColumn = () => {
 			productId: Number.MIN_SAFE_INTEGER
 		}))
 		
-		removedCheckedKey(pickedProducts).forEach(product => {
-			dispatch(addSelectedProduct(product))
+		const length = selectedProducts.length
+		removedCheckedKey(pickedProducts).forEach(({id, ...otherAttrs}) => {
+			dispatch(addSelectedProduct({
+				id: length,
+				productId: id,
+				...otherAttrs
+			}))
 		})
 
 		// Close modal

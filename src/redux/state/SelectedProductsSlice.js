@@ -20,13 +20,13 @@ const SelectedProductsSlice = createSlice({
 	removeProductFromSelectedProducts: (state, action) => {
 		console.log(action)
 		const { productId } = action.payload
-		state.products = state.products.filter(product => product.id != productId)
+		state.products = state.products.filter(product => product.productId != productId)
 	},
 	removeVariantFromSelectedProducts: (state, action) => {
 		console.log(action)
 		const { productId, variantId } = action.payload
 
-		const productIndex = state.products.findIndex(product => product.id == productId)
+		const productIndex = state.products.findIndex(product => product.productId == productId)
 
 		state.products[productIndex].variants = state.products[productIndex].variants.filter(variant => variant.id != variantId)
 	}

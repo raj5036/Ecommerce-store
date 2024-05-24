@@ -112,7 +112,8 @@ function App() {
 
   const onAddProduct = () => {
     dispatch(addSelectedProduct({
-      id: `${Number.MIN_SAFE_INTEGER}`,
+      id: 0,
+      productId: `${Number.MIN_SAFE_INTEGER}`,
       title: '',
       variants: [],
       image: null
