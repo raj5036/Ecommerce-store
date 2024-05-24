@@ -148,7 +148,7 @@ const ProductItem = ({
 						})}
 					</select>
 				</React.Fragment>)}
-				<div className='variantOptions' onClick={onShowVariant}>
+				{variants.length > 1 && <div className='variantOptions' onClick={onShowVariant}>
 					{showVariant ? (<>
 						<img src={UpArrow} alt='up arrow' className='arrowIcon'/>
 						Hide variants</>)
@@ -156,14 +156,19 @@ const ProductItem = ({
 						<img src={DownArrow} alt='down arrow' className='arrowIcon'/>
 						Show variants
 					</>}
-				</div>
+				</div>}
 				<img src={CrossIcon} alt='Cross Icon' className='crossIcon' onClick={onDeleteProduct(id)}/>
 			</div>
 			{/* Show variants */}
 			{
-				showVariant && variants.length > 0 && 
+				((variants.length == 1) || (showVariant && variants.length > 0)) && 
 				<div className='variantsListContainer'>
-					<DndContext collisionDetection={closestCorners} sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+					<DndContext 
+						collisionDetection={closestCorners} 
+						sensors={sensors} 
+						onDragStart={handleDragStart} 
+						onDragEnd={handleDragEnd}
+					>
 						<SortableContext items={variants} strategy={verticalListSortingStrategy}>
 							{variants.map((variant, index)=> {
 								return <VariantItem
