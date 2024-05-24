@@ -11,6 +11,7 @@ import { updateAllProducts } from './redux/state/AllProductsSlice'
 import { addSelectedProduct } from './redux/state/SelectedProductsSlice'
 import { useSelector } from 'react-redux'
 import { updateAllSelectedProducts } from './redux/state/SelectedProductsSlice'
+import { toast } from 'react-toastify'
 
 const FetchedProducts = [
   {
@@ -111,6 +112,12 @@ function App() {
   )
 
   const onAddProduct = () => {
+    // Check if there is already a ProductItem present in 'selectedProducts'
+    const emptyProductItemPresent = selectedProducts.some(product => product.productId == Number.MIN_SAFE_INTEGER)
+    if (emptyProductItemPresent) {
+      toast.error('Please Select a product before adding new one')
+      return
+    }
     dispatch(addSelectedProduct({
       id: 0,
       productId: `${Number.MIN_SAFE_INTEGER}`,
