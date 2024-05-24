@@ -28,6 +28,7 @@ const ProductItem = ({
 	setProductItemDraggability,
 	onlyOneProductInList,
 }) => {
+	const [showVariant, setShowVariant] = useState(false)
 	const dispatch = useDispatch()
 	const { 
 		attributes, 
@@ -90,8 +91,6 @@ const ProductItem = ({
 	}
 
 	const discountTypes = ['% Off', 'Flat']
-
-	const [showVariant, setShowVariant] = useState(false)
 
 	const onShowVariant = () => {
 		setShowVariant(!showVariant)
