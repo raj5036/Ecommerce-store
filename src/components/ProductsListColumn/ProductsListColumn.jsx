@@ -69,6 +69,10 @@ const ProductsListColumn = () => {
 		setShowProductPickerModal(false)
 	}
 
+	const onDeleteProduct = (productId) => () => {
+		console.log('productId', productId)
+	}
+
 	return (
 		<div className='listContainer'>
 			{showProductPickerModal && <ProductPickerModal 
@@ -88,6 +92,7 @@ const ProductsListColumn = () => {
 						onDiscountInputChange={onDiscountInputChange}
 						onDiscountTypeChange={onDiscountTypeChange}
 						onProductPickerClick={onProductPickerClick}
+						onDeleteProduct={onDeleteProduct}
 					/>
 				})}
 			</SortableContext>

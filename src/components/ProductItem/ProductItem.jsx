@@ -3,11 +3,12 @@ import './ProductItem.css'
 import React, {useState} from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import DragIcon from '../../assets/svgs/dragIcon.svg'
 import PickerIcon from '../../assets/svgs/pickerIcon.svg'
 import UpArrow from '../../assets/svgs/upPointer.svg'
 import DownArrow from '../../assets/svgs/downPointer.svg'
-import { closestCorners, DndContext, KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import CrossIcon from '../../assets/svgs/crossIcon.svg'
 import VariantItem from './VariantItem/VariantItem'
 
 const ProductItem = ({
@@ -20,6 +21,7 @@ const ProductItem = ({
 	onDiscountInputChange,
 	onDiscountTypeChange,
 	onProductPickerClick,
+	onDeleteProduct,
 }) => {
 	const { 
 		attributes, 
@@ -66,6 +68,10 @@ const ProductItem = ({
 
 	const onShowVariant = () => {
 		setShowVariant(!showVariant)
+	}
+
+	const onDeleteVariant = (variantId) => () => {
+		console.log('variantId', variantId)
 	}
 
 	return (
@@ -119,6 +125,7 @@ const ProductItem = ({
 						Show variants
 					</>}
 				</div>
+				<img src={CrossIcon} alt='Cross Icon' className='crossIcon' onClick={onDeleteProduct(id)}/>
 			</div>
 			{/* Show variants */}
 			{
@@ -133,6 +140,7 @@ const ProductItem = ({
 									productId={variant.productId}
 									title={variant.title}
 									price={variant.price}
+									onDeleteVariant={onDeleteVariant}
 								/>
 							})}
 						</SortableContext>
