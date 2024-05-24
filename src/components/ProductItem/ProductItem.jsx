@@ -26,6 +26,7 @@ const ProductItem = ({
 	onProductPickerClick,
 	onDeleteProduct,
 	setProductItemDraggability,
+	onlyOneProductInList,
 }) => {
 	const dispatch = useDispatch()
 	const { 
@@ -157,7 +158,10 @@ const ProductItem = ({
 						Show variants
 					</>}
 				</div>}
-				<img src={CrossIcon} alt='Cross Icon' className='crossIcon' onClick={onDeleteProduct(id)}/>
+
+				{!onlyOneProductInList && 
+				<img src={CrossIcon} alt='Cross Icon' className='crossIcon' onClick={onDeleteProduct(productId)}/>}
+
 			</div>
 			{/* Show variants */}
 			{

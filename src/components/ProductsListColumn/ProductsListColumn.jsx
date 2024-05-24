@@ -60,7 +60,7 @@ const ProductsListColumn = () => {
 
 	const onAddButtonClick = (pickedProducts) => () => {
 		console.log('pickedProducts', removedCheckedKey(pickedProducts))
-		
+
 		//Remove empty ProductItem
 		dispatch(removeProductFromSelectedProducts({
 			productId: Number.MIN_SAFE_INTEGER
@@ -118,6 +118,7 @@ const ProductsListColumn = () => {
 						onProductPickerClick={onProductPickerClick}
 						onDeleteProduct={onDeleteProduct}
 						setProductItemDraggability={setProductItemDraggability}
+						onlyOneProductInList={selectedProducts.length == 1}
 					/>
 				})}
 			</SortableContext>
