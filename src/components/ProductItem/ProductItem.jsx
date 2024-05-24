@@ -26,6 +26,7 @@ const ProductItem = ({
 	onProductPickerClick,
 	onDeleteProduct,
 }) => {
+	const [isVariantItemDragging, setIsVariantItemDragging] = useState(false)
 	const { 
 		attributes, 
 		listeners, 
@@ -34,7 +35,7 @@ const ProductItem = ({
 		transition,
 		index
 	} =
-    useSortable({ id })
+    useSortable({ id, disabled: !isVariantItemDragging })
 
 	const dispatch = useDispatch()
 
@@ -63,7 +64,16 @@ const ProductItem = ({
 	const getVariantIndex = (id) => {
 		return variants.findIndex(variant => variant.id == id)
 	}
+
+	const handleDragStart = () => {
+		console.log('handleDragStart')
+		setIsVariantItemDragging(true)
+	}
+
 	const handleDragEnd = (event) => {
+		console.log('handleDragEnd')
+		setIsVariantItemDragging(false)
+		
 		const { active, over } = event;
 
 		if (active.id === over.id) return;
@@ -153,7 +163,7 @@ const ProductItem = ({
 			{
 				showVariant && variants.length > 0 && 
 				<div className='variantsListContainer'>
-					<DndContext collisionDetection={closestCorners} sensors={sensors} onDragEnd={handleDragEnd}>
+					<DndContext collisionDetection={closestCorners} sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
 						<SortableContext items={variants} strategy={verticalListSortingStrategy}>
 							{variants.map((variant, index)=> {
 								return <VariantItem
