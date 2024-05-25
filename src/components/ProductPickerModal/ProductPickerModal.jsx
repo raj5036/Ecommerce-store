@@ -12,18 +12,6 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 	const [selectedProducts, setSelectedProducts] = useState([])
 
 	useEffect(() => {
-		const temp = allProducts.map(product => ({
-			...product,
-			checked: false,
-			variants: product.variants.map(variant => ({
-				...variant,
-				checked: false
-			}))
-		}))
-		setFilteredResults(temp)
-	}, [])
-
-	useEffect(() => {
 		let filteredProducts
 		if (!searchInput.length) {
 			filteredProducts = allProducts
