@@ -24,12 +24,40 @@ const ProductPickerModal = ({ onCloseButtonClick, onAddButtonClick }) => {
 	}, [])
 
 	useEffect(() => {
+		let filteredProducts
 		if (!searchInput.length) {
-			setFilteredResults(allProducts)
-			return;
+			filteredProducts = allProducts
+		} else {
+			filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase()))
 		}
-		setFilteredResults(allProducts.filter(product => product.title.toLowerCase().includes(searchInput.toLowerCase())))
+		setFilteredResults(getFilteredResult(filteredProducts))
 	}, [searchInput])
+
+	const difference = (array1, array2) => { 
+		return array1.filter(obj1 => !array2.some(obj2 => obj1.id === obj2.id)
+	)}
+	
+	const getFilteredResult = (filteredProducts) => {
+		return filteredProducts.map((product, pi) => {
+			const productId = product.id
+			const selectedIndex = selectedProducts.findIndex(selectedProduct=> selectedProduct.id == productId)
+			if (selectedIndex != -1) {
+				const selectedProduct = selectedProducts[selectedIndex]
+				const selectedVariants = selectedProduct.variants
+				const allVariants = filteredProducts[pi].variants
+				
+				const updatedVariants = [
+					...selectedVariants,
+					...difference(allVariants, selectedVariants)
+				]
+				return {
+					...selectedProduct,
+					variants: updatedVariants
+				}
+			}
+			return {...product}
+		})
+	}
 
 	const onProductSelectChange = (productId, checked) => {
 		let updatedFilteredResult = filteredResults.slice() //Make a copy of filteredResults
